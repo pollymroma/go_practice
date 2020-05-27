@@ -1,0 +1,96 @@
+GO: GETTING STARTED
+
+Designed by google.
+
+Fast compilation: unlike C++.
+Fully compiled: more performant, take better advantage of resources.
+Strongly typed: compiler checks types.
+Concurrent by default.
+Garbage collected.
+Simplicity as a core value.
+
+Some types of apps Go is better at: 
+- web services (deliver data) and web applications (deliver web pages to some browser).
+Multiple transactions happening simulatenously.
+- Task automation as well. script, bash. works a bit like scripting languages.
+- GUI / Thick-client. experimental library for this
+- Machine Learning. Some similar characteristics with Python.
+Web Services and Web Applications it's what it is best at.
+
+DEMO: HELLO WORLD
+
+play.golang.org an online editor to learn and explore
+
+package main //every program begins with this
+
+import () //import blocks import functionalities from other libraries
+
+func main(){} //where the app starts
+
+package main
+
+// This is an import block, it allows multiple packages to be imported
+// without repeating the "import" keyword
+import (
+    "fmt"
+)
+/* 
+    The main function, when part of the main package, 
+    identifies the entry point of an application.
+*/
+func main() {
+    fmt.Println("Hello, playground")
+}
+
+Error if you import a packcage and don't use it.
+Use tabs. Format is important but won't fail the app if you don't follow it.
+Enforces automatic semicolon. We don't add it, the compiler does.
+Opening brace goes on the same line, once a line ends, compiler adds a semicolon.
+
+--------------------------------------------------------------
+STARTING A PROJECT
+--------------------------------------------------------------
+
+Set up a local development environment.
+
+- Install and configure Go
+- Go command
+- Set up an editor
+- Organize source code
+
+1. Installing the Go Tools:
+
+golang.org
+
+Download Go: keep the default installation location C:\Go\
+Type go version in a terminal, check that it's properly installed.
+
+2. Overview of the Go command:
+
+go enter: lists the commands.
+go help <command> gives us info about that command
+go doc <package> gives you the documentation of the package
+
+3. Setting up an editor:
+
+Visual Studio Code
+
+Get a Go plugin: Go plugin supported by microsoft, get that one.
+ctrol+shift+p: Go: Install/Update Tools -> select and install all packages
+This is necessary to get the full plugin working.
+
+Start with a simple application:
+
+run the app: go run main.go
+
+4. Creating a project
+
+Create a place to house the source code.
+Create a folder.
+Initialize the module.
+In terminal go to the folder then: go mod init <module name>
+example: go mod init github.com/pluralsight/webservice
+Now create  files: main.go
+Create the hello world code.
+Run it: use the go command with the mdoule name in the go.mod file
+example: go run github.com/pluralsight/webservice
