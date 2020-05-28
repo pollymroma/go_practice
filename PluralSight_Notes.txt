@@ -1,4 +1,6 @@
+----------------------------------------------------------------
 GO: GETTING STARTED
+----------------------------------------------------------------
 
 Designed by google.
 
@@ -94,3 +96,221 @@ Now create  files: main.go
 Create the hello world code.
 Run it: use the go command with the mdoule name in the go.mod file
 example: go run github.com/pluralsight/webservice
+
+-----------------------------------------------------------------------
+WORKING WITH PRIMITIVE DATA types
+-----------------------------------------------------------------------
+
+Declarations:
+
+- var keyword, name, type
+var i int 
+i = 42
+
+- Declare and Initialize
+var f float32 = 3.14
+
+- Just declare and Initialize: implies data type
+firstName := "Arthur"
+this is might be the most common
+
+Unused variables generate a compiler error.
+
+Other datatypes:
+b := true (boolean)
+c := complex(3, 4) (complex numbers! 3+4i)
+r, im := real(c), imag(c) (multiple assignment and get the real and imaginary part of the complex number)
+
+
+Pointers:
+
+Variables are value types. They point to the value in memory.
+Pointer: the address of a location in memory that holds the variable.
+
+var keyword, name, *pointer data type
+var firstName *string //pointer
+if it prints nil the pointer isn't pointing to anything
+firstName = "Arthur" doesn't work, you can't assign a string to a pointer type.
+
+Dereferencing: I got a pointer, pointing to some data, go get the data and give it to me.
+var firstName *string = new(string)
+*firstName = "Arthur" //dereferencing operator
+this firstName has the address
+but *firstName has the actual value of what the pointer points to, because you are dereferencing
+
+firstName := "Arthur"
+ptr := &firstName //address of
+ptr: address
+*ptr: value Arthur
+firstName = "Tricia"
+ptr: same address as before
+*ptr: value Tricia
+The data stored changed but not where in the memory.
+
+
+Constants:
+
+Cannot change their value.
+
+- const keyword name and value
+const pi = 3.1415
+Declare and initialize them.
+A constant must get its value at compile time (can't initialize it with a function's return value, 'cause that happens in run time)
+If you don't specify the type, compiler interprets the type.
+const c int = 3 //now you are actually specifying the data type.
+But you can "convert" the constant and force something to happen:
+const c int = 3
+c + 3 yes!
+c + 1.2 no!
+float32(c) + 1.2 yes!
+
+
+Iota and Constant Expressions
+
+Iotas
+
+These must be on package level (outside a function). And you can access anywhere in the package.
+There are import blocks and constant blocks.
+const (
+    first = 1
+    second = "second"
+)
+Replace values with keyword iota:
+const (
+    first = iota
+    second = iota
+)
+increments value by one. printing these two says 0 and 1
+You can add something to it: iota + 6 and 2 << iota
+0 + 6
+1 << 2
+this prints 6 and 4
+you can also run:
+const (
+    first = iota +6
+    second //this one reuses the above expression
+)
+this prints 6 for the first one and 7 for the second one
+
+Constant Expressions: also evaluated on compile time.
+
+const (
+    first = iota
+    second = iota
+)
+const (
+    third = iota
+)
+I get 0, 1, 0
+iota resets in different constant blocks
+
+------------------------------------------------------------------
+WORKING WITH COLLECTIONS
+------------------------------------------------------------------
+
+Types: 
+- Arrays: fixed size
+- Slices: dynamically sized
+- Maps: key value relationship instead of index
+- Structs: there aren't classes in Go. A struct is the data part of a class.
+
+
+Arrays:
+
+A fix sized collection of a data type. All elements in it must be of the same type.
+
+- var keyword, name, size and data type
+var arr [3]int
+
+- assign elements:
+arr[0] = 1
+arr[1] = 2
+arr[2] = 3
+
+- Implicit initialization
+arr := [3]int{1, 2, 3}
+
+
+Slices:
+
+Like an array but more flexible. 
+Use an array to build a slice.
+
+arr := [3]int{1, 2, 3}
+slice := arr[:] //creates the slice from the beginning of arr to its ending. contains all its elements.
+
+print arr: 1, 2, 3
+print slice = 1, 2, 3
+
+arr[1] = 42
+slice[2] = 27
+print arr: 1, 42, 27
+print slice: 1, 42, 27
+
+Any changes to the array, are reflected on the slice. same with the slice and array.
+
+- Create a slice not on top of a explicit array:
+slice := []int{1, 2, 3}
+no size specified. compiler knows it's a slice and creates the array with 1, 2 and 3 on it's own while slice points to it.
+Add stuff to the slice:
+slice = append(slice, 4) //variable to which I'll append, value to append
+print slice: 1, 2, 3, 4
+And what happened to the array it was based on? It doesn't matter, Go does it for us. But what it does is create a new array with the new data and size.
+It's automatic and Go takes care of it.
+
+- Another use of : to create a slice of an array.
+Create slice of a slice:
+s2 := slice[1:] starts at index 1 to the end
+s3 := slice[:2] starts at the beginning, index 0, up to and not including index 2
+s4 := slice[1:2] starts at index 1 and goes up to but not including index 2
+
+slice: 1, 2, 3, 4, 42, 27
+print them:
+s2 = 2, 3, 4, 42, 27
+s3: 1, 2
+s4: 2
+
+Maps:
+
+Associate keys and values.
+
+- map keyword, type of the key, values to store
+m := map[string]int{"foo":42} curly braces to initialize
+- an element of the map: m["foo"] prints the value 42
+- assign value: m["foo"] = 27 now prints 27
+- delete: delete(m, "foo") map to delete from and key to delete
+
+Structs:
+
+A collection of different data types. Fields are fixed at compile time.
+Define it, initiliaze it.
+
+- type keyword, name, struct keyword
+type user struct {
+    ID int
+    FirstName string
+    LastName string
+}
+var u user
+u.ID = 1
+u.FirstName = "Arthur"
+u.LastName = "Dent"
+
+- short initialization:
+u2 := user{ ID: 1, 
+    FirstName: "Arthur", 
+    LastName: "Dent", //adding that comma for the compiler else you'll get an error
+    }
+
+
+PROJECT:
+
+Create packages. Units of code associated to some concept.
+Create a package: create a folder, models.
+Create a source file in it.
+package main is the entry point for the application.
+Another package won't be called like that, it's support for the app.
+
+Build command: go build github.com/pluralsight/webservice
+creates an executable.
+Run it just like webservice.executable
