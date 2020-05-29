@@ -314,3 +314,80 @@ Another package won't be called like that, it's support for the app.
 Build command: go build github.com/pluralsight/webservice
 creates an executable.
 Run it just like webservice.executable
+
+------------------------------------------------------------
+CREATING FUNCTIONS AND METHODS
+------------------------------------------------------------
+
+Creating Functions:
+
+func keyword, name of the function, () for parameters to pass data into the functions, {} for the body of the function (even if it's only one line).
+
+funct startWebServer() {
+    fmt.Println("Starting server...")
+    // do stuff
+    fmt.Println("Server started")
+}
+
+Invoke a function: name of function and () with whatever parameters it needs
+Name without () is function as an entity, an object.
+startWebServer()
+
+Adding parameters to functions:
+
+Parameter is on the function declaration side.
+Providing the data (invoking) you pass the arguments. But they are the same.
+
+Example: I want to declare port for the server
+port := 3000
+startWebServer(port) // invoke it with the argument
+For function declaration: name and type
+func startWebServer(port int)
+Just passing a parameter in a function doesn't mean it has to be used.
+
+Pass multiple parameters: separate parameters with a comma
+func startWebServer(port int, numberOfRetries int)
+
+Two parameters of the same type: a comma delimited list before a data type considers all the same data type.
+func startWebServer(port, numberOfRetries int)
+
+
+Returning data from functions:
+
+Specify the type of data it returns.
+Return a signal to see if the server started right or not
+func startWebServer(port int) bool {
+    // stuff
+    return true
+}
+isStarted := startWebServer(port) // this variable gets the result of the function
+
+Typically: if a function fails, we don't return a boolean in Go. What went wrong?
+Return an error data type. It's a pointer, so it returns a nil.
+func startWebServer(port int) error {
+    return nil
+}
+err := startWebServer(port)
+It's a valid response, the function must know what to do once you get this.
+import the errors package: import "errors"
+return errors.New("Something went wrong")
+
+You can return multiple values!!
+func startWebServer(port int) (int, error) { // you want to return an int but something might go wrong
+    return port, nil
+}
+port, err := startWebServer(port) // port catches the first return value and err the second return value
+(error as nil means nothing wrong happened)
+
+Write only variable: for variables that you only want to get data and not use it for something else
+_ and underscore delcares that variable.
+
+
+Add behaviours: create methods. Associated to a type. Create controllers package with user.go. methods for a type.
+an empty struct (no data) and create methods. or you could have data as well.
+
+There are no constructors but you can create a constructor function.
+
+Interfaces! 
+net/http package has a SeveHTTP method. A Handler type.
+The one we wrote, implements the Handler interface in theh package.
