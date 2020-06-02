@@ -390,4 +390,160 @@ There are no constructors but you can create a constructor function.
 
 Interfaces! 
 net/http package has a SeveHTTP method. A Handler type.
-The one we wrote, implements the Handler interface in theh package.
+The one we wrote, implements the Handler interface in the package.
+
+
+--------------------------------------------------------
+CONTROLLING PROGRAM FLOW
+--------------------------------------------------------
+
+Types of Loops:
+
+Every loop is a for loop. There are 4 types of for loops.
+
+1. Loop till condition.
+Loop till condition with post clause.
+Infinite loops.
+Loop over collections.
+
+Loop till condition:
+
+keyword for.
+
+var i int
+for i < 5 {
+    i++
+}
+
+Break out of a loop early and move on: break
+Continue, there's a break but only for the test: continue
+
+2. For loop till condition with a post clause.
+Needs three statements.
+
+for i := 0; i < 5; i++ { // or leave the var declaration outside and the first statment will be just a ;
+    println(i)
+}
+
+3. Infinite Loops.
+
+Ugly way:
+
+var i int
+for ; ; { // empty statements
+    if i == 5 {
+        break // this breaks the loop
+    }
+    println(i)
+    i++
+}
+
+Pretty way:
+
+var i int
+for {
+    if i == 5 {
+        break
+    }
+    println(i)
+    i++
+}
+
+4. Looping over collections.
+
+slice := []int{1, 2, 3}
+for i := 0; i < len(slice); i++ {
+    println(slice[i])
+}
+
+Better way:
+
+slice := []int{1, 2, 3}
+for i, v := range slice { // range tells the compiler it gets a collection
+    println(i, v) // i is the index, v is the value
+}
+
+Works for every type of colleciton:
+
+wellKnownPorts := map[string]int{"http": 80, "https": 443}
+for k, v := range wellKnownPorts { // tell it with collection it will iterate
+    println(k, v)
+}
+
+If I only need one value just go: for _, v := range wellKnownPorts and you println(v)
+(no variable k needed)
+
+
+Panic Function: branching
+
+A situation like an exception. Hits a condition and doesn't know what to do.
+Cannot proceed.
+It cannot run so it panics!
+Lets the rest of the app know that it can't continue to function.
+
+panic("Something bad just happened")
+shows the message and some tracing info to know where the panic happened.
+
+You can recover from panics. Read more in the docs.
+
+
+If statements:
+
+u1 := User {
+    ID: 1,
+    FirstName: "Arthur",
+    LastName: "Dent",
+}
+
+u2 := User {
+    ID: 2,
+    FirstName: "Ford",
+    LastName: "Prefect",
+}
+
+if u1.ID == u2.ID {
+    println("Same user!")
+}
+
+there's also, not equal: !=
+
+if u1.ID == u2.ID {
+    println("Same user!")
+} else {
+    println("Different users!")
+}
+
+if u1 == u2 {
+    println("Same user!")
+} else if u1.FirstName == u2.FirstName {
+    println("Similar users!")
+} else {
+    println("Different users!")
+}
+
+You can use if with else if and no final else.
+
+
+Switch Statements:
+
+type HTTPRequest struct {
+    Method string
+}
+
+r := HTTPRequest{ Method: "GET" }
+
+switch r.Method {
+case "GET": 
+        println("Get Request")
+case "DELETE":
+        println("Delete Request")
+case "POST":
+        println("Post Request")
+case "PUT":
+        println("Put Request")
+default:
+        println("Unhandled method")
+}
+
+no need for break statements for each case, implicit breaking!
+But you can use: fallthrough, follows with the following case
