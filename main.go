@@ -13,7 +13,6 @@ func main() {
 		LastName:  "McMillan",
 	}
 	fmt.Println(u) */
-	println("imprime algo en consola?")
 	controllers.RegisterControllers()
 	http.ListenAndServe(":3000", nil)
 }
